@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Home - Login / Sign Up</title>
+    <style>
+        /* Reset some styles for consistency */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Full screen background image of a room */
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            background: url('https://www.wallpaperflare.com/static/289/303/60/beautiful-room-interior-design-wallpaper.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+
+        /* Fullscreen container with center alignment */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Styling for the form container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.7); /* Transparent white background */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        /* Dream Home brand name */
+        .app-name {
+            font-size: 2.5rem;
+            color: #f4a261;
+            margin-bottom: 25px;
+            font-family: 'Georgia', serif;
+        }
+
+        /* Title for the forms */
+        h2 {
+            font-size: 1.8rem;
+            color: #2e3a59;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* Input field styling */
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .input-group label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: #f9f9f9;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #f4a261;
+            outline: none;
+            box-shadow: 0 0 8px rgba(244, 166, 97, 0.5);
+        }
+
+        .input-group input:focus + label {
+            color: #f4a261;
+            transform: translateY(-18px);
+        }
+
+        /* Button styling */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #f4a261;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e76f51;
+        }
+
+        /* Paragraph and links styling */
+        p {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        a {
+            color: #f4a261;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Button to switch between forms */
+        .toggle-btn {
+            background-color: #6c757d;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background-color: #495057;
+        }
+
+        /* Form section toggle */
+        .form-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .form-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Effect for form container entry */
+        .form-container {
+            transform: scale(0);
+            animation: scaleIn 0.5s forwards;
+        }
+
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Ensure the content (forms) is legible over the background */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay to improve contrast */
+            z-index: -1;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="overlay"></div> <!-- Dark overlay to make the text readable -->
+
+    <div class="container">
+        <div class="form-container">
+            <h1 class="app-name">Dream Home</h1>
+            
+            <!-- Login Form Section -->
+            <div id="login-form" class="form-section active">
+                <h2>Login</h2>
+                <form action="/login" method="POST" id="login-form-id">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="login-email" name="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="login-password" name="password" required placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <p>Don't have an account? <a href="javascript:void(0);" onclick="toggleForms()">Sign up here</a></p>
+                </form>
+            </div>
+
+            <!-- Sign Up Form Section -->
+            <div id="signup-form" class="form-section">
+                <h2>Sign Up</h2>
+                <form action="/signup" method="POST" id="signup-form-id">
+                    <div class="input-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="signup-name" name="name" required placeholder="Enter your full name">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="signup-email" name="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="signup-password" name="password" required placeholder="Create a password">
+                    </div>
+                    <button type="submit" class="btn">Sign Up</button>
+                    <p>Already have an account? <a href="javascript:void(0);" onclick="toggleForms()">Login here</a></p>
+                </form>
+            </div>
+
+            <button class="toggle-btn" onclick="toggleForms()">Switch to Sign Up / Login</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle between Login and Sign-Up forms
+        function toggleForms() {
+            const loginForm = document.getElementById("login-form");
+            const signupForm = document.getElementById("signup-form");
+            const container = document.querySelector('.container');
+            
+            loginForm.classList.toggle("active");
+            signupForm.classList.toggle("active");
+
+            if (signupForm.classList.contains('active')) {
+                container.classList.add('hide-login');
+                container.classList.remove('hide-signup');
+            } else {
+                container.classList.add('hide-signup');
+                container.classList.remove('hide-login');
+            }
+        }
+
+        // Example form validation (Optional)
+        document.getElementById("login-form-id").addEventListener("submit", function(e) {
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+            if (!email || !password) {
+                e.preventDefault(); // Prevent form submission
+                alert("Please fill out all fields.");
+            }
+        });
+
+        document.getElementById("signup-form-id").addEventListener("submit", function(e) {
+            const name = document.getElementById("signup-name").value;
+            const email = document.getElementById("signup-email").value;
+            const password = document.getElementById("signup-password").value;
+            if (!name || !email || !password) {
+                e.preventDefault(); // Prevent form submission
+                alert("Please fill out all fields.");
+            }
+        });
+    </script>
+</body>
+</html>
